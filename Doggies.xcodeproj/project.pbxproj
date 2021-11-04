@@ -9,21 +9,25 @@
 /* Begin PBXBuildFile section */
 		CE34CED9273457B90058C511 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34CED8273457B90058C511 /* AppDelegate.swift */; };
 		CE34CEDB273457B90058C511 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34CEDA273457B90058C511 /* SceneDelegate.swift */; };
-		CE34CEDD273457B90058C511 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34CEDC273457B90058C511 /* ViewController.swift */; };
 		CE34CEE0273457B90058C511 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE34CEDE273457B90058C511 /* Main.storyboard */; };
 		CE34CEE2273457BF0058C511 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE34CEE1273457BF0058C511 /* Assets.xcassets */; };
 		CE34CEE5273457BF0058C511 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE34CEE3273457BF0058C511 /* LaunchScreen.storyboard */; };
+		CE53B23727345C9500BB8C34 /* BreedsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE53B23627345C9500BB8C34 /* BreedsListTableViewController.swift */; };
+		CE53B23B27345FD000BB8C34 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE53B23A27345FD000BB8C34 /* GalleryViewController.swift */; };
+		CE53B23F273460E200BB8C34 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE53B23E273460E100BB8C34 /* ImageCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CE34CED5273457B90058C511 /* Doggies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Doggies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE34CED8273457B90058C511 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE34CEDA273457B90058C511 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CE34CEDC273457B90058C511 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CE34CEDF273457B90058C511 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE34CEE1273457BF0058C511 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE34CEE4273457BF0058C511 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE34CEE6273457BF0058C511 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE53B23627345C9500BB8C34 /* BreedsListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedsListTableViewController.swift; sourceTree = "<group>"; };
+		CE53B23A27345FD000BB8C34 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		CE53B23E273460E100BB8C34 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +79,9 @@
 		CE34CEEF2734581D0058C511 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CE34CEDC273457B90058C511 /* ViewController.swift */,
+				CE53B23627345C9500BB8C34 /* BreedsListTableViewController.swift */,
+				CE53B23A27345FD000BB8C34 /* GalleryViewController.swift */,
+				CE53B23E273460E100BB8C34 /* ImageCollectionViewCell.swift */,
 				CE34CEDE273457B90058C511 /* Main.storyboard */,
 				CE34CEE3273457BF0058C511 /* LaunchScreen.storyboard */,
 			);
@@ -169,8 +175,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE34CEDD273457B90058C511 /* ViewController.swift in Sources */,
 				CE34CED9273457B90058C511 /* AppDelegate.swift in Sources */,
+				CE53B23F273460E200BB8C34 /* ImageCollectionViewCell.swift in Sources */,
+				CE53B23B27345FD000BB8C34 /* GalleryViewController.swift in Sources */,
+				CE53B23727345C9500BB8C34 /* BreedsListTableViewController.swift in Sources */,
 				CE34CEDB273457B90058C511 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
