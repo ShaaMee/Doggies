@@ -10,33 +10,37 @@ import UIKit
 class BreedsListTableViewController: UITableViewController {
     
     private let cellId = "breedCeel"
-    private var viewModel: BreedsListTableViewControllerViewModel?
+    private var viewModel = BreedsListTableViewControllerViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = BreedsListTableViewControllerViewModel()
-        self.title = viewModel?.titleText
-        viewModel?.fecthBreeds()
-        viewModel?.breeds.bind({ _ in
+        self.title = viewModel.titleText
+        
+        viewModel.breeds.bind({ [weak self]_ in
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                self?.tableView.reloadData()
             }
         })
+        
+        viewModel.fecthBreeds()
     }
     
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return viewModel?.breeds.value.count ?? 0
+        return viewModel.breeds.value.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        cell.textLabel?.text = viewModel?.breeds.value[indexPath.row]
+        cell.textLabel?.text = viewModel.breeds.value[indexPath.row]
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
     
 

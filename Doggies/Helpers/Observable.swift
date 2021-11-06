@@ -11,6 +11,7 @@ class Observable<T> {
 
     var value: T {
         didSet {
+            print("!!!!!!!!!!!!!!!!!!!!!!!!!")
             listener?(value)
         }
     }
@@ -23,6 +24,6 @@ class Observable<T> {
 
     func bind(_ closure: @escaping (T) -> Void) {
         closure(value)
-        listener = closure
+        self.listener = closure
     }
 }

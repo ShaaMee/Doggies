@@ -9,13 +9,7 @@ import Foundation
 
 class BreedsListTableViewControllerViewModel {
     let titleText = "Doggies"
-    private(set) var breeds: Observable<[String]> = Observable([]) {
-        didSet{
-            for breed in breeds.value {
-                print(breed)
-            }
-        }
-    }
+    var breeds: Observable<[String]> = Observable([])
     
     func fecthBreeds() {
         guard let url = URL(string: "https://dog.ceo/api/breeds/list/all") else { return }
@@ -30,7 +24,7 @@ class BreedsListTableViewControllerViewModel {
             dogs.message?.forEach {
                 allBreeds.append($0.key)
             }
-            self.breeds = Observable(allBreeds)
+            self.breeds.value = allBreeds
         }
     }
 }
