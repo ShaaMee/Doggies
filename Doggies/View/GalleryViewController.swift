@@ -78,8 +78,12 @@ class GalleryViewController: UIViewController, UIGestureRecognizerDelegate {
             fullScreenImageView.superview?.isHidden = true
             fullScreenImageView.superview?.isUserInteractionEnabled = false
             isImageFullscreen = false
+            navigationController?.navigationBar.isHidden = false
+            view.setNeedsLayout()
+
         default:
             guard let image = getImageFromGesture(sender) else { return }
+            navigationController?.navigationBar.isHidden = true
             fullScreenImageView.image = image
             fullScreenImageView.superview?.isHidden = false
             fullScreenImageView.superview?.isUserInteractionEnabled = true
