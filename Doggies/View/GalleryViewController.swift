@@ -32,6 +32,12 @@ class GalleryViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(imageLongPressed))
+            longPressGesture.minimumPressDuration = 1.0
+            longPressGesture.allowableMovement = 30
+            longPressGesture.delegate = self
+            collectionView.addGestureRecognizer(longPressGesture)
+        
         viewModel.imageURLs.bind { [weak self] url in
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
@@ -47,6 +53,26 @@ class GalleryViewController: UIViewController {
     @objc func loadImageURLs() {
         activityIndicator.startAnimating()
         viewModel.loadImageURLs()
+    }
+    
+    @objc func imageLongPressed(sender: UILongPressGestureRecognizer){
+        
+        if sender.state == UIGestureRecognizer.State.ended { return }
+        else if sender.state == UIGestureRecognizer.State.began
+        {
+            let location = sender.location(in: self.collectionView)
+            let indexPath = self.collectionView.indexPathForItem(at: location)
+            
+            guard let index = indexPath,
+                  let cell = self.collectionView.cellForItem(at: index) as? ImageCollectionViewCell else {
+                print("Could not find index path")
+                return
+            }
+            guard let image = cell.dogImageView.image else { return }
+            let shareController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+            present(shareController, animated: true, completion: nil)
+            // Что делаем с cell по долгому нажатию
+        }
     }
 }
 
@@ -84,4 +110,9 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         return CGSize(width: cellWidth, height: cellWidth)
     }
+}
+
+extension GalleryViewController: UIGestureRecognizerDelegate {
+    
+    
 }
