@@ -8,16 +8,20 @@
 import UIKit
 
 class BreedsListTableViewController: UITableViewController {
+    
+    private let cellId = "breedCeel"
+    private var viewModel: BreedsListTableViewControllerViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
-        self.title = "Doggies"
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        viewModel = BreedsListTableViewControllerViewModel()
+        self.title = viewModel?.titleText
+        viewModel?.fecthBreeds()
+        viewModel?.breeds.bind({ _ in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        })
     }
     
 
@@ -25,18 +29,16 @@ class BreedsListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return viewModel?.breeds.value.count ?? 0
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        cell.textLabel?.text = viewModel?.breeds.value[indexPath.row]
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
