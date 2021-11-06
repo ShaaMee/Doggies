@@ -10,19 +10,38 @@ import UIKit
 class BreedsListTableViewController: UITableViewController {
     
     private let cellId = "breedCeel"
+    private let rowHeight: CGFloat = 60
     private var viewModel = BreedsListTableViewControllerViewModel()
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
+    private let refreshIndicator = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = viewModel.titleText
+        refreshIndicator.addTarget(self, action: #selector(fetchData), for: .valueChanged)
+        title = viewModel.titleText
+        tableView.refreshControl = refreshIndicator
+        view.addSubview(activityIndicator)
+        activityIndicator.center = CGPoint(x: view.center.x, y: rowHeight / 2)
         
         viewModel.breeds.bind({ [weak self]_ in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
+                self?.activityIndicator.stopAnimating()
+                self?.refreshIndicator.endRefreshing()
+                
             }
         })
-        
-        viewModel.fecthBreeds()
+        activityIndicator.startAnimating()
+        fetchData()
+    }
+    
+    @objc func fetchData() {
+        self.viewModel.fetchBreeds()
     }
     
 
@@ -40,7 +59,7 @@ class BreedsListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return rowHeight
     }
     
 

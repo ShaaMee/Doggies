@@ -9,9 +9,9 @@ import Foundation
 
 class BreedsListTableViewControllerViewModel {
     let titleText = "Doggies"
-    var breeds: Observable<[String]> = Observable([])
+    private(set) var breeds: Observable<[String]> = Observable([])
     
-    func fecthBreeds() {
+    func fetchBreeds() {
         guard let url = URL(string: "https://dog.ceo/api/breeds/list/all") else { return }
         NetworkService.shared.fetchRequest(url) { data in
             
