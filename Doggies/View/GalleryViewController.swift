@@ -11,6 +11,7 @@ class GalleryViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var fullScreenImageView: UIImageView!
     
     var viewModel = GalleryViewControllerViewModel()
 
@@ -18,9 +19,8 @@ class GalleryViewController: UIViewController, UIGestureRecognizerDelegate {
     private let cellsSpacing: CGFloat = 8.0
     
     private let refreshIndicator = UIRefreshControl()
+    private var selectedThumbnailFrame: CGRect?
     private var isImageFullscreen = false
-    
-    @IBOutlet weak var fullScreenImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +66,7 @@ class GalleryViewController: UIViewController, UIGestureRecognizerDelegate {
         if sender.state == UIGestureRecognizer.State.ended { return }
         else if sender.state == UIGestureRecognizer.State.began {
             
-            guard let image = getImageFromGesture(sender) else { return }
+            guard let image = getImageViewFromGesture(sender)?.image else { return }
             let shareController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
             present(shareController, animated: true, completion: nil)
         }
@@ -75,36 +75,63 @@ class GalleryViewController: UIViewController, UIGestureRecognizerDelegate {
     @objc func imageTapped(sender: UITapGestureRecognizer) {
         switch isImageFullscreen {
         case true:
-            fullScreenImageView.superview?.isHidden = true
-            fullScreenImageView.superview?.isUserInteractionEnabled = false
-            isImageFullscreen = false
-            navigationController?.navigationBar.isHidden = false
-            view.setNeedsLayout()
+            
+            guard let endingFrame = selectedThumbnailFrame else { return }
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.fullScreenImageView.frame = endingFrame
+            } completion: { [weak self] _ in
+                self?.fullScreenImageView.superview?.isHidden = true
+                self?.fullScreenImageView.superview?.isUserInteractionEnabled = false
+                self?.isImageFullscreen = false
+                self?.navigationController?.navigationBar.isHidden = false
+                self?.view.setNeedsLayout()
+            }
+
 
         default:
-            guard let image = getImageFromGesture(sender) else { return }
+            guard let imageView = getImageViewFromGesture(sender) else { return }
             navigationController?.navigationBar.isHidden = true
-            fullScreenImageView.image = image
+            fullScreenImageView.image = imageView.image
+            fullScreenImageView.frame = imageView.bounds
             fullScreenImageView.superview?.isHidden = false
             fullScreenImageView.superview?.isUserInteractionEnabled = true
             isImageFullscreen = true
+            
+            selectedThumbnailFrame = imageView.superview?.convert(imageView.frame, to: nil)
+            if let startingFrame = selectedThumbnailFrame {
+                fullScreenImageView.frame = startingFrame
+                UIView.animate(withDuration: 0.3) { [weak self] in
+                    guard let self = self,
+                          let backgroundView = self.fullScreenImageView.superview else { return }
+                    let screenAspect = backgroundView.frame.height / backgroundView.frame.width
+                    let imageAspect = self.fullScreenImageView.image!.size.height / self.fullScreenImageView.image!.size.width
+                    
+                    if screenAspect > imageAspect {
+                        self.fullScreenImageView.frame.size = CGSize(width: backgroundView.frame.width, height: backgroundView.frame.width * imageAspect)
+                    } else {
+                        self.fullScreenImageView.frame.size = CGSize(width: backgroundView.frame.height / imageAspect, height: backgroundView.frame.height)
+                    }
+                    self.fullScreenImageView.center = backgroundView.center
+                }
+            }
+            
+            
+            
         }
-        
-        
     }
     
-    func getImageFromGesture(_ sender: UIGestureRecognizer) -> UIImage? {
+    func getImageViewFromGesture(_ sender: UIGestureRecognizer) -> UIImageView? {
         
         let location = sender.location(in: self.collectionView)
         let indexPath = self.collectionView.indexPathForItem(at: location)
         
         guard let index = indexPath,
               let cell = self.collectionView.cellForItem(at: index) as? ImageCollectionViewCell,
-              let image = cell.dogImageView.image else {
+              let imageView = cell.dogImageView else {
             print("Can't get image")
             return nil
         }
-        return image
+        return imageView
     }
 }
 
