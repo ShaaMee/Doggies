@@ -92,18 +92,24 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="3wO-Ub-YkP">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XfA-qN-Ir6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="IWg-Di-WXS" firstAttribute="top" secondItem="XfA-qN-Ir6" secondAttribute="top" id="1rd-UY-LPF"/>
                             <constraint firstItem="IWg-Di-WXS" firstAttribute="trailing" secondItem="XfA-qN-Ir6" secondAttribute="trailing" id="30v-eq-ao4"/>
+                            <constraint firstItem="3wO-Ub-YkP" firstAttribute="centerY" secondItem="suD-OO-iJ8" secondAttribute="centerY" id="AVe-pY-vuJ"/>
                             <constraint firstItem="IWg-Di-WXS" firstAttribute="bottom" secondItem="XfA-qN-Ir6" secondAttribute="bottom" id="EY4-KP-0Uf"/>
                             <constraint firstItem="IWg-Di-WXS" firstAttribute="leading" secondItem="XfA-qN-Ir6" secondAttribute="leading" id="caA-cW-nBx"/>
+                            <constraint firstItem="3wO-Ub-YkP" firstAttribute="centerX" secondItem="suD-OO-iJ8" secondAttribute="centerX" id="ftE-2x-Kz1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Mig-xA-V9R"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="3wO-Ub-YkP" id="2yf-dP-Q5k"/>
                         <outlet property="collectionView" destination="IWg-Di-WXS" id="oVa-iD-vlP"/>
                     </connections>
                 </viewController>

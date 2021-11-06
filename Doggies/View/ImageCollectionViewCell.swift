@@ -10,4 +10,11 @@ import UIKit
 class ImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var dogImageView: UIImageView!
     
+    var dataTask: URLSessionTask?
+        
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        dogImageView.image = nil
+        dataTask?.cancel()
+    }
 }

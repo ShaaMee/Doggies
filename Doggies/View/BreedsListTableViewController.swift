@@ -36,11 +36,12 @@ class BreedsListTableViewController: UITableViewController {
                 
             }
         })
-        activityIndicator.startAnimating()
+        
         fetchData()
     }
     
     @objc func fetchData() {
+        activityIndicator.startAnimating()
         self.viewModel.fetchBreeds()
     }
     
