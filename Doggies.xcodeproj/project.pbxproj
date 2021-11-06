@@ -127,8 +127,8 @@
 		CE7CCFA827368E8900DA91CB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				CE7CCFA927368E9900DA91CB /* NetworkService.swift */,
 				CE10400A27369680008C0095 /* Observable.swift */,
+				CE7CCFA927368E9900DA91CB /* NetworkService.swift */,
 				CE1040172736EB8F008C0095 /* ImageService.swift */,
 			);
 			path = Helpers;

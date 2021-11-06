@@ -17,8 +17,4 @@ class ImageCollectionViewCell: UICollectionViewCell {
         dogImageView.image = nil
         dataTask?.cancel()
     }
-    
-    @objc func shareImage() {
-        
-    }
 }

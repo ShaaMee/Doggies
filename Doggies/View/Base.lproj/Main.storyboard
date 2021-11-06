@@ -92,6 +92,21 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G3a-fG-DEG" userLabel="FullscreenView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cSn-X6-0kX">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="cSn-X6-0kX" firstAttribute="leading" secondItem="G3a-fG-DEG" secondAttribute="leading" id="8nH-e8-K0v"/>
+                                    <constraint firstItem="cSn-X6-0kX" firstAttribute="top" secondItem="G3a-fG-DEG" secondAttribute="top" id="Nk3-4P-TK3"/>
+                                    <constraint firstAttribute="bottom" secondItem="cSn-X6-0kX" secondAttribute="bottom" id="ZMq-hH-EWg"/>
+                                    <constraint firstAttribute="trailing" secondItem="cSn-X6-0kX" secondAttribute="trailing" id="jSQ-0x-R65"/>
+                                </constraints>
+                            </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="3wO-Ub-YkP">
                                 <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
                             </activityIndicatorView>
@@ -102,15 +117,20 @@
                             <constraint firstItem="IWg-Di-WXS" firstAttribute="top" secondItem="XfA-qN-Ir6" secondAttribute="top" id="1rd-UY-LPF"/>
                             <constraint firstItem="IWg-Di-WXS" firstAttribute="trailing" secondItem="XfA-qN-Ir6" secondAttribute="trailing" id="30v-eq-ao4"/>
                             <constraint firstItem="3wO-Ub-YkP" firstAttribute="centerY" secondItem="suD-OO-iJ8" secondAttribute="centerY" id="AVe-pY-vuJ"/>
+                            <constraint firstItem="G3a-fG-DEG" firstAttribute="leading" secondItem="suD-OO-iJ8" secondAttribute="leading" id="AhQ-bN-INB"/>
                             <constraint firstItem="IWg-Di-WXS" firstAttribute="bottom" secondItem="XfA-qN-Ir6" secondAttribute="bottom" id="EY4-KP-0Uf"/>
+                            <constraint firstItem="G3a-fG-DEG" firstAttribute="top" secondItem="suD-OO-iJ8" secondAttribute="top" id="Fd2-UZ-rZm"/>
+                            <constraint firstAttribute="trailing" secondItem="G3a-fG-DEG" secondAttribute="trailing" id="VBq-aO-I7J"/>
                             <constraint firstItem="IWg-Di-WXS" firstAttribute="leading" secondItem="XfA-qN-Ir6" secondAttribute="leading" id="caA-cW-nBx"/>
                             <constraint firstItem="3wO-Ub-YkP" firstAttribute="centerX" secondItem="suD-OO-iJ8" secondAttribute="centerX" id="ftE-2x-Kz1"/>
+                            <constraint firstAttribute="bottom" secondItem="G3a-fG-DEG" secondAttribute="bottom" id="hJz-C1-F3V"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Mig-xA-V9R"/>
                     <connections>
                         <outlet property="activityIndicator" destination="3wO-Ub-YkP" id="2yf-dP-Q5k"/>
                         <outlet property="collectionView" destination="IWg-Di-WXS" id="oVa-iD-vlP"/>
+                        <outlet property="fullScreenImageView" destination="cSn-X6-0kX" id="lSW-xI-heo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bOv-ma-ElR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

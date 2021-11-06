@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GalleryViewController: UIViewController {
+class GalleryViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -17,9 +17,10 @@ class GalleryViewController: UIViewController {
     private let cellsInRowCount: CGFloat = 2.0
     private let cellsSpacing: CGFloat = 8.0
     
-    
-    
     private let refreshIndicator = UIRefreshControl()
+    private var isImageFullscreen = false
+    
+    @IBOutlet weak var fullScreenImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +34,15 @@ class GalleryViewController: UIViewController {
         collectionView.dataSource = self
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(imageLongPressed))
-            longPressGesture.minimumPressDuration = 1.0
-            longPressGesture.allowableMovement = 30
-            longPressGesture.delegate = self
-            collectionView.addGestureRecognizer(longPressGesture)
+        longPressGesture.minimumPressDuration = 1.0
+        longPressGesture.allowableMovement = 30
+        longPressGesture.delegate = self
+        collectionView.addGestureRecognizer(longPressGesture)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        tapGesture.numberOfTapsRequired = 1
+        collectionView.addGestureRecognizer(tapGesture)
+        view.addGestureRecognizer(tapGesture)
         
         viewModel.imageURLs.bind { [weak self] url in
             DispatchQueue.main.async {
@@ -55,24 +61,46 @@ class GalleryViewController: UIViewController {
         viewModel.loadImageURLs()
     }
     
-    @objc func imageLongPressed(sender: UILongPressGestureRecognizer){
+    @objc func imageLongPressed(sender: UILongPressGestureRecognizer) {
         
         if sender.state == UIGestureRecognizer.State.ended { return }
-        else if sender.state == UIGestureRecognizer.State.began
-        {
-            let location = sender.location(in: self.collectionView)
-            let indexPath = self.collectionView.indexPathForItem(at: location)
+        else if sender.state == UIGestureRecognizer.State.began {
             
-            guard let index = indexPath,
-                  let cell = self.collectionView.cellForItem(at: index) as? ImageCollectionViewCell else {
-                print("Could not find index path")
-                return
-            }
-            guard let image = cell.dogImageView.image else { return }
+            guard let image = getImageFromGesture(sender) else { return }
             let shareController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
             present(shareController, animated: true, completion: nil)
-            // Что делаем с cell по долгому нажатию
         }
+    }
+    
+    @objc func imageTapped(sender: UITapGestureRecognizer) {
+        switch isImageFullscreen {
+        case true:
+            fullScreenImageView.superview?.isHidden = true
+            fullScreenImageView.superview?.isUserInteractionEnabled = false
+            isImageFullscreen = false
+        default:
+            guard let image = getImageFromGesture(sender) else { return }
+            fullScreenImageView.image = image
+            fullScreenImageView.superview?.isHidden = false
+            fullScreenImageView.superview?.isUserInteractionEnabled = true
+            isImageFullscreen = true
+        }
+        
+        
+    }
+    
+    func getImageFromGesture(_ sender: UIGestureRecognizer) -> UIImage? {
+        
+        let location = sender.location(in: self.collectionView)
+        let indexPath = self.collectionView.indexPathForItem(at: location)
+        
+        guard let index = indexPath,
+              let cell = self.collectionView.cellForItem(at: index) as? ImageCollectionViewCell,
+              let image = cell.dogImageView.image else {
+            print("Can't get image")
+            return nil
+        }
+        return image
     }
 }
 
@@ -110,9 +138,4 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         return CGSize(width: cellWidth, height: cellWidth)
     }
-}
-
-extension GalleryViewController: UIGestureRecognizerDelegate {
-    
-    
 }

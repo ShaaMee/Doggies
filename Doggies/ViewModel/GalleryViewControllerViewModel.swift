@@ -10,7 +10,7 @@ import Foundation
 class GalleryViewControllerViewModel {
     var breed: String?
     var imageURLs: Observable<[String]> = Observable([])
-    lazy var requestURL: URL? = {
+    private lazy var requestURL: URL? = {
         guard let dogBreed = breed else { return nil}
         var components = URLComponents()
         components.scheme = "https"

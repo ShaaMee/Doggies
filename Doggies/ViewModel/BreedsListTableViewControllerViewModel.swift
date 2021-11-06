@@ -8,6 +8,7 @@
 import Foundation
 
 class BreedsListTableViewControllerViewModel {
+    
     let titleText = "Doggies"
     private(set) var breeds: Observable<[String]> = Observable([])
     
