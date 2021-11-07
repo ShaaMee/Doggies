@@ -2,14 +2,19 @@
 //  GalleryViewControllerViewModel.swift
 //  Doggies
 //
-//  Created by user on 06.11.2021.
+//  Created by Aleksei Pavlov on 06.11.2021.
 //
 
 import Foundation
 
 class GalleryViewControllerViewModel {
+    
     var breed: String?
     var imageURLs: Observable<[String]> = Observable([])
+    let cellIdentifier = "imageCell"
+    let dummyImageName = "clock"
+    
+    // Assembling URL from URLComponents for safe encoding of dogBreed string
     private lazy var requestURL: URL? = {
         guard let dogBreed = breed else { return nil}
         var components = URLComponents()
@@ -19,8 +24,11 @@ class GalleryViewControllerViewModel {
         return components.url
     }()
     
+    // Fetching list of images URLs
     func loadImageURLs() {
+        
         guard let url = requestURL else { return }
+        
         NetworkService.shared.fetchRequest(url) { [weak self] jsonData in
             guard let data = jsonData,
                   let dogImagesAdresses = try? JSONDecoder().decode(DogImages.self, from: data),

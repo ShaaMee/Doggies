@@ -2,16 +2,17 @@
 //  BreedsListTableViewController.swift
 //  Doggies
 //
-//  Created by user on 04.11.2021.
+//  Created by Aleksei Pavlov on 04.11.2021.
 //
 
 import UIKit
 
 class BreedsListTableViewController: UITableViewController {
     
+    private var viewModel = BreedsListTableViewControllerViewModel()
     private let cellId = "breedCeel"
     private let rowHeight: CGFloat = 60
-    private var viewModel = BreedsListTableViewControllerViewModel()
+    
     private let activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
@@ -20,25 +21,35 @@ class BreedsListTableViewController: UITableViewController {
     
     private let refreshIndicator = UIRefreshControl()
 
+    // MARK: - viewDidLoad()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        refreshIndicator.addTarget(self, action: #selector(fetchData), for: .valueChanged)
-        title = viewModel.titleText
-        tableView.refreshControl = refreshIndicator
-        view.addSubview(activityIndicator)
-        activityIndicator.center = CGPoint(x: view.center.x, y: rowHeight / 2)
+        setupViewController()
         
+        // View Model binding
         viewModel.breeds.bind({ [weak self]_ in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
                 self?.activityIndicator.stopAnimating()
                 self?.refreshIndicator.endRefreshing()
-                
             }
         })
         
         fetchData()
     }
+    
+    // MARK: - Setting refresh control and activity indicator
+    
+    func setupViewController() {
+        title = viewModel.titleText
+        refreshIndicator.addTarget(self, action: #selector(fetchData), for: .valueChanged)
+        tableView.refreshControl = refreshIndicator
+        activityIndicator.center = CGPoint(x: view.center.x, y: rowHeight / 2)
+        view.addSubview(activityIndicator)
+    }
+    
+    // MARK: - Fetching breeds list from server
     
     @objc func fetchData() {
         activityIndicator.startAnimating()
@@ -62,7 +73,6 @@ class BreedsListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return rowHeight
     }
-
     
     // MARK: - Navigation
 

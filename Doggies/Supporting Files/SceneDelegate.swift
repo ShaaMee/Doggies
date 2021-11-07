@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  Doggies
 //
-//  Created by user on 04.11.2021.
+//  Created by Aleksei Pavlov on 04.11.2021.
 //
 
 import UIKit
